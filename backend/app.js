@@ -5,16 +5,20 @@ const cors = require('cors');
 const csurf = require('csurf');
 const helmet = require('helmet');
 const cookieParser = require('cookie-parser');
+const app = express();
+const routes = require('./routes');
 
 const { environment } = require('./config');
 const isProduction = environment === 'production';
-
-const app = express();
 
 app.use(morgan('dev'));
 
 app.use(cookieParser());
 app.use(express.json());
+
+
+
+
 
 // Security Middleware
 if (!isProduction) {
@@ -40,7 +44,7 @@ if (!isProduction) {
     })
   );
 
-
+  app.use(routes); // Connect all the routes
 
 // Catch unhandled requests and forward to error handler.
 app.use((_req, _res, next) => {
@@ -84,11 +88,7 @@ app.use((err, _req, res, _next) => {
 
 
 
-const routes = require('./routes');
 
-
-
-app.use(routes); // Connect all the routes
 
 
 module.exports = app;
