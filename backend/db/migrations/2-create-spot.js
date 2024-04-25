@@ -59,6 +59,7 @@ module.exports = {
     }, queryInterface.createSchema('airbnb_backend'));
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Spots');
+    options.tableName = "Spots";
+    return queryInterface.dropTable(options);
   }
 };
