@@ -36,7 +36,7 @@ module.exports = {
         firstName: 'John',
         lastName: 'Smith'
       },
-    ], { validate: true });
+    ], { validate: true }, options);
   },
 
   async down (queryInterface, Sequelize) {
