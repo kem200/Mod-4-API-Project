@@ -1,4 +1,10 @@
 'use strict';
+
+let options = {};
+if (process.env.NODE_ENV === 'production') {
+  options.schema = process.env.SCHEMA;  // define your schema in options object
+}
+
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
@@ -12,8 +18,7 @@ module.exports = {
       ownerId: {
         type: Sequelize.INTEGER,
         references: {
-          model: 'Users',
-          key: 'id'
+          model: 'Users'
         }
       },
       address: {
@@ -50,8 +55,8 @@ module.exports = {
       updatedAt: {
         allowNull: false,
         type: Sequelize.DATE
-      }
-    });
+      },
+    }, queryInterface.createSchema('airbnb_backend'));
   },
   async down(queryInterface, Sequelize) {
     await queryInterface.dropTable('Spots');
