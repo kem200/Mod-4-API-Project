@@ -56,7 +56,7 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DATE
       },
-    }, queryInterface.createSchema('airbnb_backend'));
+    })
   },
   async down(queryInterface, Sequelize) {
     options.tableName = "Spots";
