@@ -3,9 +3,8 @@
 
 /** @type {import('sequelize-cli').Migration} */
 
-let options = {
-  schema: 'airbnb_backend'
-};
+let options = {};
+
 if (process.env.NODE_ENV === 'production') {
   options.schema = process.env.SCHEMA;  // define your schema in options object
 }
@@ -28,16 +27,18 @@ module.exports = {
       },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
+        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
       },
       updatedAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
+        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
       }
     }, options);
   },
   async down(queryInterface, Sequelize) {
     options.tableName = "ReviewImages";
-    return queryInterface.dropTable(options);
+    await queryInterface.dropTable(options);
   }
 };
