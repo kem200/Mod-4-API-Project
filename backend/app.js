@@ -81,12 +81,12 @@ app.use((err, _req, res, _next) => {
   console.error(err);
 
   const resObj = {
-    title: err.title || 'Server Error',
     message: err.message,
     errors: err.errors,
   };
 
   if (!isProduction) {
+    resObj.err.title || 'Server Error',
     resObj.stack = err.stack
   }
 
