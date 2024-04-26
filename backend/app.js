@@ -90,7 +90,7 @@ app.use((err, _req, res, _next) => {
     res.stack = err.stack
   }
 
-  res.json(res);
+  res.json(resObj);
 
 });
 
