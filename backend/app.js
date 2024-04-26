@@ -86,7 +86,7 @@ app.use((err, _req, res, _next) => {
     errors: err.errors,
   };
 
-  if (process.env.NODE_ENV === 'development') {
+  if (!isProduction) {
     resObj.stack = err.stack
   }
 
