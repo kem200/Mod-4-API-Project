@@ -52,9 +52,11 @@ router.post(
         })
 
         const errors = {}
-        if (checkIfExists.email === email) errors.email = "User with that email already exists";
-        if (checkIfExists.username === username) errors.username = "User with that username already exists";
-        if (checkIfExists) return res.status(500).json({ message: "User already exists", errors })
+        if (checkIfExists) {
+            if (checkIfExists.email === email) errors.email = "User with that email already exists";
+            if (checkIfExists.username === username) errors.username = "User with that username already exists";
+            return res.status(500).json({ message: "User already exists", errors })
+        }
 
         const user = await User.create({ email, username, hashedPassword, firstName, lastName });
 
