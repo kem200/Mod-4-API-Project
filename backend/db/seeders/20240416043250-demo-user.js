@@ -5,9 +5,7 @@
 const { User } = require('../models');
 const bcrypt = require("bcryptjs");
 
-let options = {
-  schema: 'airbnb_backend'
-};
+let options = {};
 if (process.env.NODE_ENV === 'production') {
   options.schema = process.env.SCHEMA;  // define your schema in options object
 }
@@ -36,7 +34,7 @@ module.exports = {
         firstName: 'John',
         lastName: 'Smith'
       },
-    ], { validate: true });
+    ], { validate: true }, options);
   },
 
   async down (queryInterface, Sequelize) {
