@@ -86,7 +86,7 @@ app.use((err, _req, res, _next) => {
   };
 
   if (!isProduction) {
-    resObj.err.title || 'Server Error',
+    // resObj.err.title || 'Server Error',
     resObj.stack = err.stack
   }
 
