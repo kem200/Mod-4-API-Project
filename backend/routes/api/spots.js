@@ -182,7 +182,7 @@ router.get('/current', restoreUser, requireAuth, async (req, res) => {
         price: spot.price,
         createdAt: spot.createdAt,
         updatedAt: spot.updatedAt,
-        avgStarRating: spot.dataValues.avgRating ? parseFloat(spot.dataValues.avgRating.toFixed(1)) : null,
+        avgStarRating: spot.dataValues.avgRating ? parseFloat(spot.dataValues.avgRating).toFixed(1) : null,
         previewImage: spot.SpotImages[0] ? spot.SpotImages[0].url : null
     }))
 
@@ -279,7 +279,7 @@ router.get('/', async (req, res) => {
         price: spot.price,
         createdAt: spot.createdAt,
         updatedAt: spot.updatedAt,
-        avgStarRating: spot.dataValues.avgRating ? parseFloat(spot.dataValues.avgRating.toFixed(1)) : null,
+        avgStarRating: spot.dataValues.avgRating ? parseFloat(spot.dataValues.avgRating).toFixed(1) : null,
         previewImage: spot.SpotImages[0] ? spot.SpotImages[0].url : null
     }))
 
