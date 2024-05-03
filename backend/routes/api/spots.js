@@ -305,25 +305,28 @@ router.get('/', validateQuery, async (req, res) => {
                 attributes: ['url'],
                 required: false
             },
+            {
+                model: Review,
+                attributes: [],
+                required: false
+            }
         ],
-        attributes: ['id', 'ownerId', 'address', 'city', 'state', 'country', 'lat', 'lng', 'name', 'price', 'createdAt', 'updatedAt'],
+        attributes: {
+            include: [
+                'id', 'ownerId', 'address', 'city', 'state', 'country', 'lat', 'lng', 'name', 'price', 'createdAt', 'updatedAt',
+                [Sequelize.literal(`(
+                        SELECT AVG(stars)
+                        FROM airbnb_backend."Reviews"
+                        WHERE "Reviews"."spotId" = "Spot"."id"
+                    )`), 'avgRating']
+            ]
+        },
+        group: ['Spot.id'],
         limit: size,
         offset: (page - 1) * size,
 
     })
 
-    const id = getAllSpots.map(spot => spot.id);
-    
-    const ratings = await Review.findAll({
-        where: { spotId: { [Op.in]: id } },
-        attributes: ['spotId', [Sequelize.fn('AVG', Sequelize.col('stars')), 'avgRating']],
-        group: ['spotId']
-    })
-
-    const spotRatings = ratings.reduce((acc, rating) => {
-        acc[rating.spotId] = parseFloat(rating.get('avgRating')).toFixed(1);
-        return acc
-    }, {})
 
     const format = getAllSpots.map(spot => ({
         id: spot.id,
@@ -339,7 +342,7 @@ router.get('/', validateQuery, async (req, res) => {
         price: spot.price,
         createdAt: spot.createdAt,
         updatedAt: spot.updatedAt,
-        avgStarRating: spotRatings[spot.id] || null,
+        avgStarRating: spot.dataValues.avgRating ? parseFloat(spot.dataValues.avgRating).toFixed(1) : null,
         previewImage: spot.SpotImages[0] ? spot.SpotImages[0].url : null
     }))
 
