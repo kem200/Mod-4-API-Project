@@ -8,6 +8,7 @@ const { restoreUser } = require('../../utils/auth')
 const { check } = require('express-validator')
 const { handleValidationErrors } = require('../../utils/validation');
 const Sequelize = require('sequelize')
+const { Op } = require('sequelize')
 
 const validateSpot = [
     check('address')
@@ -58,6 +59,46 @@ const validateReview = [
     check('stars')
         .isInt({ min: 1, max: 5 })
         .withMessage('Stars must be an integer from 1 to 5'),
+    handleValidationErrors
+]
+
+const validateQuery = [
+    check('page')
+        .optional()
+        .isNumeric()
+        .isInt({ min: 1 })
+        .bail()
+        .withMessage('Page must be greater than or equal to 1'),
+    check('size')
+        .optional()
+        .isNumeric()
+        .isInt({ min: 1, max: 20 })
+        .bail()
+        .withMessage('Size must be between 1 and 20'),
+    check('maxLat')
+        .optional()
+        .isFloat({ min: -90, max: 90 })
+        .withMessage('Maximum latitude is invalid'),
+    check('minLat')
+        .optional()
+        .isFloat({ min: -90, max: 90 })
+        .withMessage('Minimum latitude is invalid'),
+    check('maxLng')
+        .optional()
+        .isFloat({ min: -180, max: 180 })
+        .withMessage('Maximum longitude is invalid'),
+    check('minLng')
+        .optional()
+        .isFloat({ min: -180, max: 180 })
+        .withMessage('Minimum longitude is invalid'),
+    check('minPrice')
+        .optional()
+        .isNumeric({ min: 0 })
+        .withMessage('Minimum price must be greater than or equal to 0'),
+    check('maxPrice')
+        .optional()
+        .isNumeric({ min: 0 })
+        .withMessage('Maximum price must be greater than or equal to 0'),
     handleValidationErrors
 ]
 
@@ -237,32 +278,53 @@ router.get('/:spotId', async (req, res) => {
 })
 
 // Get all spots
-router.get('/', async (req, res) => {
+router.get('/', validateQuery, async (req, res) => {
 
-    const getAllSpots = await Spot.findAll(
-        {
+    let { page, size, minLat, maxLat, minLng, maxLng, minPrice, maxPrice } = req.query;
 
-            include: [
-                {
-                    model: SpotImage,
-                    where: { preview: true },
-                    attributes: ['url'],
-                    required: false
-                },
-                {
-                    model: Review,
-                    attributes: [],
-                    required: false
-                }
-            ],
-            attributes: {
-                include: [
-                    'id', 'ownerId', 'address', 'city', 'state', 'country', 'lat', 'lng', 'name', 'price', 'createdAt', 'updatedAt',
-                    [Sequelize.fn('AVG', Sequelize.col('Reviews.stars')), 'avgRating']
-                ]
+    page = parseInt(page) || 1
+    size = parseInt(size) || 20
+
+    const whereObject = {
+        ...(minLat && { lat: { [Op.gte]: minLat } }),
+        ...(maxLat && { lat: { [Op.lte]: maxLat } }),
+        ...(minLng && { lng: { [Op.gte]: minLng } }),
+        ...(maxLng && { lng: { [Op.lte]: maxLng } }),
+        ...(minPrice && { price: { [Op.gte]: minPrice } }),
+        ...(maxPrice && { price: { [Op.lte]: maxPrice } })
+
+    }
+
+    const getAllSpots = await Spot.findAll({
+        where: whereObject,
+        include: [
+            {
+                model: SpotImage,
+                where: { preview: true },
+                attributes: ['url'],
+                required: false
             },
-            group: ['Spot.id', 'SpotImages.id']
-        })
+            {
+                model: Review,
+                attributes: [],
+                required: false
+            }
+        ],
+        attributes: {
+            include: [
+                'id', 'ownerId', 'address', 'city', 'state', 'country', 'lat', 'lng', 'name', 'price', 'createdAt', 'updatedAt',
+                [Sequelize.literal(`(
+                        SELECT AVG(stars)
+                        FROM Reviews
+                        WHERE Reviews.spotId = Spot.id
+                    )`), 'avgRating']
+            ]
+        },
+        group: ['Spot.id'],
+        limit: size,
+        offset: (page - 1) * size,
+
+    })
 
 
     const format = getAllSpots.map(spot => ({
