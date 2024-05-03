@@ -41,6 +41,16 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     sequelize,
     modelName: 'Review',
+    getterMethods: {
+      createdAt() {
+        const date = this.getDataValue('createdAt');
+        return date ? date.toISOString().replace('T', ' ').slice(0, 19) : null
+      },
+      updatedAt() {
+        const date = this.getDataValue('updatedAt');
+        return date ? date.toISOString().replace('T', ' ').slice(0, 19) : null
+      }
+    }
   });
   return Review;
 };
