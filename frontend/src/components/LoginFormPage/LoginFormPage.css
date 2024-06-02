@@ -1,0 +1,25 @@
+
+main {
+    border: red 1px solid;
+    width: 500px;
+}
+
+h1 {
+    text-align: center;
+}
+
+form {
+    display: flex;
+    border: 1px blue solid;
+    flex-direction: column;
+}
+
+input {
+    margin: 5px;
+}
+
+button {
+    border-radius: 3px;
+    height: 40px;
+    font-weight: bold;
+}
