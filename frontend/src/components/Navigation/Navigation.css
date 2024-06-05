@@ -43,13 +43,13 @@ nav {
   }
 
 .profile-dropdown {
-    position: absolute;
     right: 0;
     background-color: white;
     border: 1px solid #ccc;
     list-style-type: none;
     margin: 0;
     flex-direction: column;
+    border-radius: 5px;
   }
 
   .profile-dropdown li {
