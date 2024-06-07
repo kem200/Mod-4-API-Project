@@ -6,7 +6,7 @@
 .spots-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
-    gap: 20px;
+    gap: 15px;
     width: 100%;
     margin: 0 auto;
     max-width: 1700px;
@@ -34,6 +34,7 @@
 
 .spot-info {
     padding: 15px;
+    position: relative;
 }
 
 .spot-info h2 {
@@ -58,6 +59,30 @@
 }
 
 .spot-info .spot-rating {
-    color: #ff9900;
+    color: black;
     margin-left: 10px;
+}
+
+.tooltip {
+    visibility: hidden;
+    width: 120px;
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 8px 0;
+    position: absolute;
+    z-index: 1;
+    bottom: 100%; 
+    left: 50%;
+    margin-left: -60px;
+    opacity: 0;
+    transition: opacity 0.3s, transform 0.3s;
+    transform: translateY(10px);
+}
+
+.spot-card:hover .tooltip {
+    visibility: visible;
+    opacity: .85;
+    transform: translateY(0);
 }

@@ -85,10 +85,10 @@ app.use((err, _req, res, _next) => {
     errors: err.errors,
   };
 
-  if (!isProduction) {
-    // resObj.err.title || 'Server Error',
-    resObj.stack = err.stack
-  }
+  // if (!isProduction) {
+  //   // resObj.err.title || 'Server Error',
+  //   resObj.stack = err.stack
+  // }
 
   res.json(resObj);
 

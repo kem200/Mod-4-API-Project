@@ -14,12 +14,17 @@ module.exports = {
     await  SpotImage.bulkCreate([
       {
         spotId: 1,
-        url: 'testUrl1',
+        url: 'https://www.google.com/url?sa=i&url=https%3A%2F%2Fescapebrooklyn.com%2Fcuriosity-lane-modern-weston-ct%2F&psig=AOvVaw0rhbn-vQQ58ck6zjJzLrrR&ust=1717731502941000&source=images&cd=vfe&opi=89978449&ved=0CBUQjRxqFwoTCPiQ0YiHxoYDFQAAAAAdAAAAABAE',
         preview: true
       },
       {
         spotId: 1,
-        url: 'testUrl2',
+        url: 'https://escapebrooklyn.com/wp-content/uploads/2022/04/11.jpg',
+        preview: false
+      },
+      {
+        spotId: 1,
+        url: 'https://escapebrooklyn.com/wp-content/uploads/2022/04/11.jpg',
         preview: false
       },
       {
