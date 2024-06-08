@@ -1,60 +1,89 @@
 nav {
-    padding: 10px 20px;
-  }
+  padding: 10px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
 
-  nav ul {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    align-items: center;
-  }
+.nav-left, .nav-right {
+  display: flex;
+  align-items: center;
+}
 
-  nav li {
-    margin: 0 15px;
-  }
+.nav-left {
+  flex: 1;
+}
 
-  nav a {
-    color: white;
-    text-decoration: none;
-    font-weight: bold;
-    color: rgb(46, 46, 46);
-  }
+.nav-right {
+  flex: 1;
+  justify-content: flex-end;
+}
 
-  nav a:hover {
-    text-decoration: underline;
-  }
+nav ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  align-items: center;
+}
 
-  nav button {
-    background: none;
-    border: none;
-    color: rgb(46, 46, 46);
-    cursor: pointer;
-    font-size: 16px;
-  }
+nav li {
+  margin: 0 15px;
+}
 
-  nav button:hover {
-    text-decoration: underline;
-  }
+nav a {
+  color: rgb(46, 46, 46);
+  text-decoration: none;
+  font-weight: bold;
+}
 
-  .hidden {
-    display: none;
-  }
+nav button {
+  background: none;
+  border: none;
+  color: rgb(46, 46, 46);
+  cursor: pointer;
+  font-size: 16px;
+}
+
+nav button:hover {
+  text-decoration: underline;
+}
+
+.hidden {
+  display: none;
+}
 
 .profile-dropdown {
-    right: 0;
-    background-color: white;
-    border: 1px solid #ccc;
-    list-style-type: none;
-    margin: 0;
-    flex-direction: column;
-    border-radius: 5px;
-  }
+  right: 0;
+  background-color: white;
+  border: 1px solid #ccc;
+  list-style-type: none;
+  margin: 0;
+  flex-direction: column;
+  border-radius: 5px;
+}
 
-  .profile-dropdown li {
-    margin: 5px;
-  }
+.profile-dropdown li {
+  margin: 5px;
+}
 
-  .profile-dropdown button {
-    color: rgb(46, 46, 46);
-  }
+.profile-dropdown button {
+  color: rgb(46, 46, 46);
+}
+
+.new-spot-button {
+  margin-right: 15px;
+  font-weight: bold;
+  text-decoration: none;
+  color: rgb(56, 56, 56);
+  padding: 10px 20px;
+  border-radius: 20px;
+  background-color: white;
+  border: 1px solid rgb(46, 46, 46);
+  transition: box-shadow 0.3s ease-in-out;
+}
+
+.new-spot-button:hover {
+  text-decoration: none;
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
+}

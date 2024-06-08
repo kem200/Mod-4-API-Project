@@ -1,0 +1,16 @@
+
+
+.profile-dropdown button.logout {
+    background: #ff5a5f;
+    border-radius: 8px;
+    border: none;
+    color: white;
+    cursor: pointer;
+    padding: 10px;
+    width: 100%;
+    text-align: left;
+  }
+
+  .profile-dropdown button.logout:hover {
+    background-color: #ff3a3f;
+  }

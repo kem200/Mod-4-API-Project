@@ -43,7 +43,6 @@ function SpotDetails() {
                 </div>
             </div>
             <div className='wrapper'>
-
                 <div className="spot-hosted">
                     <h3>Hosted by {spot.Owner.firstName} {spot.Owner.lastName}</h3>
                     <p className='spot-description'>{spot.description}</p>
@@ -60,11 +59,11 @@ function SpotDetails() {
                 </div>
             </div>
             <div className="spot-reviews">
-            <p className="spot-rating">
-                            ★ {spot.avgStarRating || 'New'}
-                            {spot.numReviews > 0 && ` · ${spot.numReviews} reviews`}
-                        </p>
-                    <Reviews spotId={spotId}/>
+                <h2>
+                    ★ {spot.avgStarRating || 'New'}
+                    {spot.numReviews > 0 && ` · ${spot.numReviews} reviews`}
+                </h2>
+                <Reviews spotId={spotId} />
             </div>
         </div>
     );

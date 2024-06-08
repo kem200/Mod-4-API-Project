@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useDispatch } from 'react-redux';
 import { useModal } from '../../context/modal';
 import * as sessionActions from '../../store/session';
@@ -14,6 +14,20 @@ function SignupFormModal() {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [errors, setErrors] = useState({});
   const { closeModal } = useModal();
+  const modalRef = useRef();
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (modalRef.current && !modalRef.current.contains(event.target)) {
+        closeModal();
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [closeModal]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -42,74 +56,64 @@ function SignupFormModal() {
   };
 
   return (
-    <>
-      <h1>Sign Up</h1>
-      <form onSubmit={handleSubmit}>
-        <label>
-          Email
+    <div className="modal-container">
+      <main className="signup-form-modal" ref={modalRef}>
+        <h1>Sign Up</h1>
+        <form onSubmit={handleSubmit}>
           <input
+            placeholder='Email'
             type="text"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
           />
-        </label>
-        {errors.email && <p>{errors.email}</p>}
-        <label>
-          Username
+          {errors.email && <p>{errors.email}</p>}
           <input
+            placeholder='Username'
             type="text"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
             required
           />
-        </label>
-        {errors.username && <p>{errors.username}</p>}
-        <label>
-          First Name
+          {errors.username && <p>{errors.username}</p>}
           <input
+            placeholder='First Name'
             type="text"
             value={firstName}
             onChange={(e) => setFirstName(e.target.value)}
             required
           />
-        </label>
-        {errors.firstName && <p>{errors.firstName}</p>}
-        <label>
-          Last Name
+          {errors.firstName && <p>{errors.firstName}</p>}
           <input
+            placeholder='Last Name'
             type="text"
             value={lastName}
             onChange={(e) => setLastName(e.target.value)}
             required
           />
-        </label>
-        {errors.lastName && <p>{errors.lastName}</p>}
-        <label>
-          Password
+          {errors.lastName && <p>{errors.lastName}</p>}
           <input
+            placeholder='Password'
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
           />
-        </label>
-        {errors.password && <p>{errors.password}</p>}
-        <label>
-          Confirm Password
+          {errors.password && <p>{errors.password}</p>}
           <input
+            placeholder='Confirm Password'
             type="password"
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
             required
           />
-        </label>
-        {errors.confirmPassword && (
-          <p>{errors.confirmPassword}</p>
-        )}
-        <button type="submit">Sign Up</button>
-      </form>
-    </>
+          {errors.confirmPassword && (
+            <p>{errors.confirmPassword}</p>
+          )}
+          <button type="submit">Sign Up</button>
+        </form>
+      </main>
+    </div>
   );
 }
 
