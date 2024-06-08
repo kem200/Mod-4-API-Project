@@ -18,6 +18,9 @@ function SpotDetails() {
         return <div>Loading...</div>;
     }
 
+    const previewImage = spot.SpotImages.find(image => image.preview);
+    const otherImages = spot.SpotImages.filter(image => !image.preview);
+    const mainImage = previewImage ? previewImage.url : (otherImages[0] ? otherImages[0].url : null);
     const visibleThumbnails = spot.SpotImages.filter(image => !image.preview).slice(0, 4);
 
     return (
@@ -27,7 +30,11 @@ function SpotDetails() {
                 <p>{spot.city}, {spot.state}, {spot.country}</p>
             </div>
             <div className="spot-images">
-                <img className="main-image" src={spot.SpotImages.find(image => image.preview).url} alt={spot.name} />
+                {mainImage ? (
+                    <img className="main-image" src={mainImage} alt={spot.name} />
+                ) : (
+                    <div className="main-image-alt">{spot.name}</div>
+                )}
                 <div className="thumbnail-wrapper">
                     {visibleThumbnails.map((image, index) => (
                         <img key={index} src={image.url} alt={`${spot.name} ${index + 1}`} />
@@ -36,21 +43,24 @@ function SpotDetails() {
             </div>
             <div className='wrapper'>
 
-            <div className="spot-hosted">
-                <h3>Hosted by {spot.Owner.firstName} {spot.Owner.lastName}</h3>
-                <p>{spot.description}</p>
-            </div>
-            <div className="spot-reserve">
-                <div className="price-and-rating">
-                    <p className="spot-price">${spot.price} / night</p>
-                    <p className="spot-rating">★  {spot.avgStarRating || 'New'} · {spot.numReviews} reviews</p>
+                <div className="spot-hosted">
+                    <h3>Hosted by {spot.Owner.firstName} {spot.Owner.lastName}</h3>
+                    <p>{spot.description}</p>
                 </div>
-                <button>Reserve</button>
-            </div>
+                <div className="spot-reserve">
+                    <div className="price-and-rating">
+                        <p className="spot-price">${spot.price} / night</p>
+                        <p className="spot-rating">
+                            ★ {spot.avgStarRating || 'New'}
+                            {spot.numReviews > 0 && ` · ${spot.numReviews} reviews`}
+                        </p>
+                    </div>
+                    <button>Reserve</button>
+                </div>
             </div>
             <div className="spot-reviews">
                 <h3>Reviews</h3>
-                    
+
             </div>
         </div>
     );

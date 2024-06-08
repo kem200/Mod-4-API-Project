@@ -270,7 +270,7 @@ router.get('/:spotId', async (req, res) => {
         createdAt: spot.createdAt,
         updatedAt: spot.updatedAt,
         numReviews: reviewCount,
-        avgStarRating: avgStars,
+        avgStarRating: avgStars.toFixed(1),
         SpotImages: spot.SpotImages,
         Owner: spot.Owner
     }
