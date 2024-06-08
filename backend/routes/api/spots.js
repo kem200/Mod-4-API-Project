@@ -251,7 +251,7 @@ router.get('/:spotId', async (req, res) => {
 
     const reviewCount = await Review.count({ where: { spotId: req.params.spotId } })
     const starsSum = await Review.sum('stars', { where: { spotId: req.params.spotId } })
-    const avgStars = starsSum / reviewCount;
+    const avgStars = reviewCount > 0 ? (starsSum / reviewCount).toFixed(1) : null;
 
     const formattedRes = {
         id: spot.id,
@@ -268,7 +268,7 @@ router.get('/:spotId', async (req, res) => {
         createdAt: spot.createdAt,
         updatedAt: spot.updatedAt,
         numReviews: reviewCount,
-        avgStarRating: avgStars.toFixed(1),
+        avgStarRating: avgStars,
         SpotImages: spot.SpotImages,
         Owner: spot.Owner
     }

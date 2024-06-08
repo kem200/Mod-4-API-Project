@@ -46,7 +46,7 @@ function SpotDetails() {
 
                 <div className="spot-hosted">
                     <h3>Hosted by {spot.Owner.firstName} {spot.Owner.lastName}</h3>
-                    <p>{spot.description}</p>
+                    <p className='spot-description'>{spot.description}</p>
                 </div>
                 <div className="spot-reserve">
                     <div className="price-and-rating">

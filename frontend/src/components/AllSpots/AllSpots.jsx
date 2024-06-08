@@ -27,7 +27,7 @@ function AllSpots() {
             <div className="spots-grid">
                 {spots.map(spot => (
                     <div key={spot.id} className="spot-card" onClick={() => handleSpotClick(spot.id)}>
-                        <img src={'https://a0.muscache.com/im/pictures/5e67688b-757d-44d6-8b4b-1e91dc6fe49f.jpg?im_w=1920'} alt={spot.name} />
+                        <img src={spot.previewImage} alt={spot.name} />
                         <div className="spot-info">
                             <div className="tooltip">{spot.name}</div>
                             <div className="spot-location">

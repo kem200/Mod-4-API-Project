@@ -8,8 +8,6 @@ function Reviews({spotId}) {
     const dispatch = useDispatch();
     const reviews = useSelector(state => Object.values(state.review.reviews))
 
-    console.log(reviews)
-
     useEffect(() => {
         dispatch(getReviews(spotId))
     }, [dispatch, spotId])
@@ -21,7 +19,6 @@ function Reviews({spotId}) {
 
     return (
         <div className="review-box">
-            <h2>Reviews</h2>
             {reviews.map(review => (
                 <div key={review.id}>
                     <h4>{review.User.firstName}</h4>
