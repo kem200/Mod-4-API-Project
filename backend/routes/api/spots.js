@@ -360,10 +360,11 @@ router.post('/:spotId/reviews', restoreUser, requireAuth, validateReview, async 
 
     const checkReview = await Review.findOne({
         where: {
-            userId: user
+            userId: user,
+            spotId: req.params.spotId
         }
     })
-
+    console.log(checkReview)
     if (checkReview) return res.status(500).json({ message: 'User already has a review for this spot' })
 
     const newReview = await Review.create({

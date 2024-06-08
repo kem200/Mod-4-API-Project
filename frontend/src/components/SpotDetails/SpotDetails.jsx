@@ -50,7 +50,7 @@ function SpotDetails() {
             </div>
             <div className="spot-reviews">
                 <h3>Reviews</h3>
-
+                    
             </div>
         </div>
     );
