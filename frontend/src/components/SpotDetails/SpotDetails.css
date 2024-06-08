@@ -50,19 +50,6 @@
     border-radius: 8px;
 }
 
-.view-all-button {
-    grid-column: span 2;
-    background-color: #ff5a5f;
-    color: #fff;
-    border: none;
-    border-radius: 8px;
-    padding: 10px 20px;
-    cursor: pointer;
-    font-size: 0.9rem;
-    justify-self: center;
-    margin-top: 10px;
-}
-
 .spot-hosted {
     margin-bottom: 20px;
 }
@@ -80,7 +67,7 @@
     flex-direction: column;
     align-items: center;
     margin-bottom: 20px;
-    width: 400px;
+    width: 375px;
 }
 
 .spot-reserve .price-and-rating {
@@ -88,12 +75,12 @@
     justify-content: space-between;
     width: 100%;
     align-items: center;
-    margin-bottom: 10px;
 }
 
 .spot-price {
     color: black;
-    font-size: 1.2rem;
+    font-size: 1.0rem;
+    font-weight: 600;
 }
 
 .spot-reserve {
@@ -116,13 +103,12 @@
     background-color: #ff3a3f;
 }
 
-.spot-reserve .spot-rating {
-    color: #313131;
+ .spot-rating {
+    color: #000000;
+    font-weight: 550;
+    font-size: 1rem;
 }
 
-.spot-reviews {
-    margin-top: 20px;
-}
 
 .spot-reviews h3 {
     font-size: 1.5rem;

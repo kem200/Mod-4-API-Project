@@ -1,0 +1,19 @@
+.review-box {
+    text-align: left;
+}
+
+.date {
+    margin: 0;
+    font-size: .9rem;
+    color: black;
+    opacity: .5;
+}
+
+h4 {
+    margin-bottom: 5px;
+}
+
+.review-p {
+    margin-top: 5px;
+    color: black;
+}

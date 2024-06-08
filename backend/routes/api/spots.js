@@ -181,36 +181,34 @@ router.get('/:spotId/bookings', restoreUser, requireAuth, async (req, res) => {
 
 // Get all spots owned by current user
 router.get('/current', restoreUser, requireAuth, async (req, res) => {
+    const user = req.user.id;
 
-    const user = req.user.id
-
-    const getUsersSpots = await Spot.findAll(
-        {
-            where: {
-                ownerId: user
-            },
+    const spots = await Spot.findAll({
+        where: {
+            ownerId: user
+        },
+        attributes: {
             include: [
-                {
-                    model: SpotImage,
-                    where: { preview: true },
-                    attributes: ['url']
-                },
-                {
-                    model: Review,
-                    attributes: []
-                }
-            ],
-            attributes: {
-                include: [
-                    'id', 'ownerId', 'address', 'city', 'state', 'country', 'lat', 'lng', 'name', 'price', 'createdAt', 'updatedAt',
-                    [Sequelize.fn('AVG', Sequelize.col('Reviews.stars')), 'avgRating']
-                ]
+                [Sequelize.fn('AVG', Sequelize.col('Reviews.stars')), 'avgRating']
+            ]
+        },
+        include: [
+            {
+                model: SpotImage,
+                as: 'SpotImages',
+                attributes: ['url'],
+                where: { preview: true },
+                required: false
             },
-            group: ['Spot.id', 'SpotImages.id']
-        })
+            {
+                model: Review,
+                attributes: []
+            }
+        ],
+        group: ['Spot.id']
+    });
 
-
-    const format = getUsersSpots.map(spot => ({
+    const format = spots.map(spot => ({
         id: spot.id,
         ownerId: spot.ownerId,
         address: spot.address,
@@ -225,11 +223,11 @@ router.get('/current', restoreUser, requireAuth, async (req, res) => {
         createdAt: spot.createdAt,
         updatedAt: spot.updatedAt,
         avgStarRating: spot.dataValues.avgRating ? parseFloat(spot.dataValues.avgRating).toFixed(1) : null,
-        previewImage: spot.SpotImages[0] ? spot.SpotImages[0].url : null
-    }))
+        previewImage: spot.SpotImages.length > 0 ? spot.SpotImages[0].url : null
+    }));
 
-    res.json({ Spots: format })
-})
+    res.json({ Spots: format });
+});
 
 // Get spot by id
 router.get('/:spotId', async (req, res) => {

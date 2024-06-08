@@ -3,6 +3,7 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getSpotDetails } from '../../store/spots';
 import { useParams } from 'react-router-dom';
+import Reviews from '../Reviews/Reviews';
 import './SpotDetails.css';
 
 function SpotDetails() {
@@ -59,8 +60,11 @@ function SpotDetails() {
                 </div>
             </div>
             <div className="spot-reviews">
-                <h3>Reviews</h3>
-
+            <p className="spot-rating">
+                            ★ {spot.avgStarRating || 'New'}
+                            {spot.numReviews > 0 && ` · ${spot.numReviews} reviews`}
+                        </p>
+                    <Reviews spotId={spotId}/>
             </div>
         </div>
     );
