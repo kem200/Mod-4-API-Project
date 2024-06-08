@@ -43,19 +43,14 @@ function SpotDetails() {
             <div className="spot-reserve">
                 <div className="price-and-rating">
                     <p className="spot-price">${spot.price} / night</p>
-                    <p className="spot-rating">★  {spot.avgStarRating} · {spot.numReviews} reviews</p>
+                    <p className="spot-rating">★  {spot.avgStarRating || 'New'} · {spot.numReviews} reviews</p>
                 </div>
                 <button>Reserve</button>
             </div>
             </div>
             <div className="spot-reviews">
                 <h3>Reviews</h3>
-                {spot.reviews && spot.reviews.map((review, index) => (
-                    <div key={index} className="review">
-                        <p><strong>{review.user}</strong> {review.date}</p>
-                        <p>{review.comment}</p>
-                    </div>
-                ))}
+
             </div>
         </div>
     );
