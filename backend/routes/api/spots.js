@@ -25,16 +25,16 @@ const validateSpot = [
     check('country')
         .exists({ checkFalsy: true })
         .withMessage('Country is required'),
-    check('lat')
-        .exists({ checkFalsy: true })
-        .withMessage('Latitude is required')
-        .isNumeric({ min: -90, max: 90 })
-        .withMessage('Latitude must be within -90 and 90'),
-    check('lng')
-        .exists({ checkFalsy: true })
-        .withMessage('Longtitude is required')
-        .isNumeric({ min: -180, max: 180 })
-        .withMessage('Longitude must be within -180 and 180'),
+    // check('lat')
+    //     // .exists({ checkFalsy: true })
+    //     .withMessage('Latitude is required')
+    //     .isNumeric({ min: -90, max: 90 })
+    //     .withMessage('Latitude must be within -90 and 90'),
+    // check('lng')
+    //     // .exists({ checkFalsy: true })
+    //     .withMessage('Longtitude is required')
+    //     .isNumeric({ min: -180, max: 180 })
+    //     .withMessage('Longitude must be within -180 and 180'),
     check('name')
         .isLength({ max: 50 })
         .withMessage('Name must be less than 50 characters')
