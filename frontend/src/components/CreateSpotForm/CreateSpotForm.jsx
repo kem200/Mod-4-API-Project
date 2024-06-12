@@ -156,6 +156,8 @@ function CreateSpotForm() {
                     <p>Competitive pricing can help your listing stand out and rank higher
                         in search results.
                     </p>
+                    <div className={styles.wrapper}>
+                        <p id={styles.dollarsign}>$</p>
                     <input
                         className={styles.input}
                         placeholder="Price"
@@ -164,6 +166,7 @@ function CreateSpotForm() {
                         onChange={(e) => setPrice(e.target.value)}
                     />
                     {errors.price && <p className={styles.error}>{errors.price}</p>}
+                    </div>
                 </div>
                 <h4>Liven up your spot with photos</h4>
                 <p>Submit a link to at least one photo to publish your spot.</p>

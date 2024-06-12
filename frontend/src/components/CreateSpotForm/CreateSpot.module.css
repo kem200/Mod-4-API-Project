@@ -27,7 +27,7 @@
 .input, .textarea {
   width: 100%;
   padding: 10px;
-  margin-top: 5px;
+  margin: 5px;
   border: 1px solid #ccc;
   border-radius: 5px;
 }
@@ -69,4 +69,15 @@
 
 .button:hover {
   background-color: #e04848;
+}
+
+.wrapper {
+  display: flex;
+  text-align: center;
+  align-items: center;
+}
+
+#dollarsign {
+  margin-right: 5px;
+  font-weight: bold;
 }
