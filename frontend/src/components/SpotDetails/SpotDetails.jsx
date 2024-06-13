@@ -10,6 +10,7 @@ function SpotDetails() {
     const { spotId } = useParams();
     const dispatch = useDispatch();
     const spot = useSelector(state => state.spot.currentSpot);
+    const ownerId = spot.ownerId
 
     useEffect(() => {
         dispatch(getSpotDetails(spotId));
@@ -63,7 +64,7 @@ function SpotDetails() {
                     ★ {spot.avgStarRating || 'New'}
                     {spot.numReviews > 0 && ` · ${spot.numReviews} reviews`}
                 </h2>
-                <Reviews spotId={spotId} />
+                <Reviews spotId={spotId} ownerId={ownerId}/>
             </div>
         </div>
     );

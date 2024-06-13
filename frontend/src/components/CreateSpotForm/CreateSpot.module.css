@@ -27,7 +27,7 @@
 .input, .textarea {
   width: 100%;
   padding: 10px;
-  margin: 5px;
+  margin-top: 10px;
   border: 1px solid #ccc;
   border-radius: 5px;
 }
@@ -78,6 +78,7 @@
 }
 
 #dollarsign {
+  margin-top: 22px;
   margin-right: 5px;
   font-weight: bold;
 }
