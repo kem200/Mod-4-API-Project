@@ -1,8 +1,10 @@
 import { csrfFetch } from './csrf';
 
 const GET_SPOTS = "spots/getSpots";
+const GET_USER_SPOTS = '/spots/currentUser'
 const GET_SPOT_DETAILS = 'spots/getSpotDetails';
 const CREATE_SPOT = 'spots/createSpot'
+const UPDATE_SPOT = '/spots/updateSpot'
 const ADD_IMAGE = 'spots/addImage';
 
 const getSpot = (spots) => {
@@ -11,6 +13,13 @@ const getSpot = (spots) => {
         spots
     };
 };
+
+const getUserSpot = (userSpots) => {
+    return {
+        type: GET_USER_SPOTS,
+        payload: userSpots
+    }
+}
 
 const spotDetails = (spotDetail) => {
     return {
@@ -26,6 +35,13 @@ const createSpot = (newSpot) => {
     }
 }
 
+const updateSpot = (updatedSpot) => {
+    return {
+        type: UPDATE_SPOT,
+        payload: updatedSpot
+    }
+}
+
 const addImage = (image) => ({
     type: ADD_IMAGE,
     image,
@@ -37,6 +53,15 @@ export const getSpots = () => async (dispatch) => {
     if (response.ok) {
         const data = await response.json();
         dispatch(getSpot(data.Spots));
+    }
+}
+
+export const getUserSpots = () => async (dispatch) => {
+    const response = await csrfFetch('/api/spots/current')
+
+    if (response.ok) {
+        const data = await response.json();
+        dispatch(getUserSpot(data.Spots))
     }
 }
 
@@ -65,6 +90,22 @@ export const createNewSpot = (newSpot) => async (dispatch) => {
     }
 }
 
+export const updatedSpot = (spotId, payload) => async (dispatch) => {
+    const response = await csrfFetch(`/api/spots/${spotId}`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(payload)
+    })
+
+    if (response.ok) {
+        const data = await response.json();
+        dispatch(updateSpot(data))
+        return data
+    }
+}
+
 export const addImageToSpot = (spotId, url, preview) => async (dispatch) => {
     const response = await csrfFetch(`/api/spots/${spotId}/images`, {
         method: 'POST',
@@ -82,7 +123,7 @@ export const addImageToSpot = (spotId, url, preview) => async (dispatch) => {
     }
 };
 
-const initialState = { spots: {}, currentSpot: {}, spotImages: {} };
+const initialState = { spots: {}, currentSpot: {}, spotImages: {}, userSpots: {} };
 
 const spotReducer = (state = initialState, action) => {
     switch (action.type) {
@@ -91,6 +132,13 @@ const spotReducer = (state = initialState, action) => {
             action.spots.forEach(spot => {
                 newState.spots[spot.id] = spot;
             });
+            return newState;
+        }
+        case GET_USER_SPOTS: {
+            const newState = { ...state }
+            action.payload.forEach(spot => {
+                newState.userSpots[spot.id] = spot;
+            })
             return newState;
         }
         case GET_SPOT_DETAILS: {
@@ -104,6 +152,14 @@ const spotReducer = (state = initialState, action) => {
             newState.spots[action.newSpot.id] = action.newSpot;
             return newState;
         }
+        case UPDATE_SPOT: {
+            const newState = { ...state, spots: { ...state.spots } };
+            newState.spots[action.payload.id] = action.payload;
+            if (newState.userSpots[action.payload.id]) {
+                newState.userSpots[action.payload.id] = action.payload;
+            }
+            return newState;
+        }
         case ADD_IMAGE: {
             const newState = { ...state };
             const spotId = action.image.spotId;
@@ -113,7 +169,6 @@ const spotReducer = (state = initialState, action) => {
             newState.spotImages[spotId].push(action.image);
             return newState;
         }
-
         default: {
             return state;
         }

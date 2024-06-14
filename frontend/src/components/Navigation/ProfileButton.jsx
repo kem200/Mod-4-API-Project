@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { FaUserCircle } from 'react-icons/fa';
 import * as sessionActions from '../../store/session';
@@ -8,6 +9,7 @@ import SignupFormModal from '../SignupFormModal';
 import './ProfileButton.css'
 
 function ProfileButton({ user }) {
+  const navigate = useNavigate()
   const dispatch = useDispatch();
   const [showMenu, setShowMenu] = useState(false);
   const ulRef = useRef();
@@ -37,7 +39,13 @@ function ProfileButton({ user }) {
     e.preventDefault();
     dispatch(sessionActions.logout());
     closeMenu();
+    navigate('/')
   };
+
+  const handleManage = (e) => {
+    e.preventDefault()
+    navigate('/spots/manage')
+  }
 
   const ulClassName = "profile-dropdown" + (showMenu ? "" : " hidden");
 
@@ -51,6 +59,9 @@ function ProfileButton({ user }) {
           <>
             <li>Hello, {user.firstName} {user.lastName}</li>
             <li>{user.email}</li>
+            <li>
+              <button className='manage-spots' onClick={handleManage}>Manage Spots</button>
+            </li>
             <li>
               <button className='logout' onClick={logout}>Log Out</button>
             </li>

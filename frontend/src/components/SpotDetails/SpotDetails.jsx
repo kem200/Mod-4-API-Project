@@ -1,4 +1,3 @@
-
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getSpotDetails } from '../../store/spots';
@@ -10,20 +9,23 @@ function SpotDetails() {
     const { spotId } = useParams();
     const dispatch = useDispatch();
     const spot = useSelector(state => state.spot.currentSpot);
-    const ownerId = spot.ownerId
+    const reviews = useSelector(state => Object.values(state.review.reviews));
 
     useEffect(() => {
         dispatch(getSpotDetails(spotId));
-    }, [dispatch, spotId]);
+    }, [dispatch, spotId, reviews.length]);
 
     if (!spot.id) {
         return <div>Loading...</div>;
     }
 
     const previewImage = spot.SpotImages.find(image => image.preview);
-    const otherImages = spot.SpotImages.filter(image => !image.preview);
-    const mainImage = previewImage ? previewImage.url : (otherImages[0] ? otherImages[0].url : null);
-    const visibleThumbnails = spot.SpotImages.filter(image => !image.preview).slice(0, 4);
+    const otherImages = spot.SpotImages.filter(image => !image.preview).slice(0, 4);
+
+    const numReviews = reviews.length;
+    const avgStarRating = numReviews > 0 ? ( reviews.reduce((acc, review) => acc + review.stars, 0) / numReviews).toFixed(1) : null;
+
+    const reviewTextForSingularOrPlural = numReviews === 1 ? 'review' : 'reviews';
 
     return (
         <div className="spot-details">
@@ -32,13 +34,13 @@ function SpotDetails() {
                 <p>{spot.city}, {spot.state}, {spot.country}</p>
             </div>
             <div className="spot-images">
-                {mainImage ? (
-                    <img className="main-image" src={mainImage} alt={spot.name} />
+                {previewImage ? (
+                    <img className="main-image" src={previewImage.url} alt={spot.name} />
                 ) : (
-                    <div className="main-image-alt">{spot.name}</div>
+                    otherImages[0] && <img className="main-image" src={otherImages[0].url} alt={spot.name} />
                 )}
                 <div className="thumbnail-wrapper">
-                    {visibleThumbnails.map((image, index) => (
+                    {otherImages.map((image, index) => (
                         <img key={index} src={image.url} alt={`${spot.name} ${index + 1}`} />
                     ))}
                 </div>
@@ -52,19 +54,19 @@ function SpotDetails() {
                     <div className="price-and-rating">
                         <p className="spot-price">${spot.price} / night</p>
                         <p className="spot-rating">
-                            ★ {spot.avgStarRating || 'New'}
-                            {spot.numReviews > 0 && ` · ${spot.numReviews} reviews`}
+                            ★ {avgStarRating || 'New'}
+                            {numReviews > 0 && ` · ${numReviews} ${reviewTextForSingularOrPlural}`}
                         </p>
                     </div>
-                    <button>Reserve</button>
+                    <button onClick={() => alert('Feature coming soon')}>Reserve</button>
                 </div>
             </div>
             <div className="spot-reviews">
                 <h2>
-                    ★ {spot.avgStarRating || 'New'}
-                    {spot.numReviews > 0 && ` · ${spot.numReviews} reviews`}
+                    ★ {avgStarRating || 'New'}
+                    {numReviews > 0 && ` · ${numReviews} ${reviewTextForSingularOrPlural}`}
                 </h2>
-                <Reviews spotId={spotId} ownerId={ownerId}/>
+                <Reviews spotId={spotId} ownerId={spot.ownerId}/>
             </div>
         </div>
     );

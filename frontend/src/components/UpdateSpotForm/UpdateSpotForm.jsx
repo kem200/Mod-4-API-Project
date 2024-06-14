@@ -1,12 +1,18 @@
 import { useDispatch } from "react-redux";
-import { useState } from "react";
-import { createNewSpot, addImageToSpot } from "../../store/spots";
+import { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
+import { addImageToSpot, updatedSpot, getSpotDetails } from "../../store/spots";
 import { useNavigate } from 'react-router-dom';
-import styles from './CreateSpot.module.css';
+import { useParams } from "react-router-dom";
+import styles from '../CreateSpotForm/CreateSpot.module.css'
 
-function CreateSpotForm() {
+
+function UpdateSpotForm() {
+    const { spotId } = useParams();
+    const spot = useSelector(state => state.spot.spots[spotId]);
     const dispatch = useDispatch();
     const navigate = useNavigate();
+
     const [country, setCountry] = useState('');
     const [address, setAddress] = useState('');
     const [city, setCity] = useState('');
@@ -20,6 +26,31 @@ function CreateSpotForm() {
     const [image3, setImage3] = useState('');
     const [image4, setImage4] = useState('');
     const [errors, setErrors] = useState({});
+
+    useEffect(() => {
+        dispatch(getSpotDetails(spotId));
+    }, [dispatch, spotId]);
+
+    useEffect(() => {
+        if (spot) {
+            setCountry(spot.country);
+            setAddress(spot.address);
+            setCity(spot.city);
+            setState(spot.state);
+            setDescription(spot.description);
+            setName(spot.name);
+            setPrice(spot.price);
+            if (spot.SpotImages) {
+                const previewImageObj = spot.SpotImages.find(img => img.preview === true);
+                const nonPreviewImages = spot.SpotImages.filter(img => img.preview === false);
+                setPreviewImage(previewImageObj ? previewImageObj.url : '');
+                setImage1(nonPreviewImages[0] ? nonPreviewImages[0].url : '');
+                setImage2(nonPreviewImages[1] ? nonPreviewImages[1].url : '');
+                setImage3(nonPreviewImages[2] ? nonPreviewImages[2].url : '');
+                setImage4(nonPreviewImages[3] ? nonPreviewImages[3].url : '');
+            }
+        }
+    }, [spot]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -43,7 +74,7 @@ function CreateSpotForm() {
         setErrors(newErrors);
 
         if (Object.keys(newErrors).length === 0) {
-            const newSpot = {
+            const updatedSpotData = {
                 country,
                 address,
                 city,
@@ -53,9 +84,9 @@ function CreateSpotForm() {
                 price,
             };
 
-            let createdSpot = await dispatch(createNewSpot(newSpot));
-            if (createdSpot && createdSpot.id) {
-                const spotId = createdSpot.id;
+            let updatedSpotResponse = await dispatch(updatedSpot(spotId, updatedSpotData));
+            if (updatedSpotResponse && updatedSpotResponse.id) {
+                const spotId = updatedSpotResponse.id;
 
                 const images = [
                     ...(previewImage ? [{ url: previewImage, preview: true }] : []),
@@ -76,7 +107,7 @@ function CreateSpotForm() {
 
     return (
         <main className={styles.main}>
-            <h2 className={styles.title}>Update your Spot</h2>
+            <h2 className={styles.title}>Create a new Spot</h2>
             <h4 className={styles.subtitle}>Where's your place located?</h4>
             <p>Guests will only get your exact address once they booked a reservation</p>
             <form onSubmit={handleSubmit} className={styles.form}>
@@ -158,14 +189,14 @@ function CreateSpotForm() {
                     </p>
                     <div className={styles.wrapper}>
                         <p id={styles.dollarsign}>$</p>
-                    <input
-                        className={styles.input}
-                        placeholder="Price"
-                        type="number"
-                        value={price}
-                        onChange={(e) => setPrice(e.target.value)}
-                    />
-                    {errors.price && <p className={styles.error}>{errors.price}</p>}
+                        <input
+                            className={styles.input}
+                            placeholder="Price"
+                            type="number"
+                            value={price}
+                            onChange={(e) => setPrice(e.target.value)}
+                        />
+                        {errors.price && <p className={styles.error}>{errors.price}</p>}
                     </div>
                 </div>
                 <h4>Liven up your spot with photos</h4>
@@ -223,4 +254,4 @@ function CreateSpotForm() {
     );
 }
 
-export default CreateSpotForm;
+export default UpdateSpotForm;

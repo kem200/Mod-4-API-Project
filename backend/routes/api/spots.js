@@ -110,7 +110,7 @@ router.get('/:spotId/reviews', async (req, res) => {
 
     const spotReviews = await Review.findAll({
         where: {
-            spotId: parseInt(req.params.spotId)
+            spotId: parseInt(req.params.spotId),
         },
         include: [
             {

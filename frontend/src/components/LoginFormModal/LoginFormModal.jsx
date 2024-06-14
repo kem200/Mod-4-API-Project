@@ -16,7 +16,7 @@ function LoginFormModal() {
     const errors = {};
 
     if (credential.length < 4) {
-      errors.credential = 'Credential must be more than 4 characters';
+      errors.login = 'Credential must be more than 4 characters';
     } else if (password.length < 6) {
       errors.password = 'Password must be more than 6 characters';
     }
@@ -54,6 +54,7 @@ function LoginFormModal() {
     <div className="modal-container">
       <main className="login-form-modal" ref={modalRef}>
         <h1>Log In</h1>
+        {errors.credential && <p>{errors.credential}</p>}
         <form onSubmit={handleSubmit}>
           <input
             placeholder="Username or Email"
@@ -69,7 +70,6 @@ function LoginFormModal() {
             onChange={(e) => setPassword(e.target.value)}
             required
           />
-          {errors.credential && <p>{errors.credential}</p>}
           <button disabled={Object.values(errors).length} type="submit">Log In</button>
         </form>
       </main>

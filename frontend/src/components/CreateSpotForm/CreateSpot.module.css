@@ -1,6 +1,7 @@
 .main {
   max-width: 600px;
-  margin: 0 auto;
+  margin: auto;
+  margin-top: 20px;
   padding: 20px;
   background-color: #f8f8f8;
   border-radius: 10px;
