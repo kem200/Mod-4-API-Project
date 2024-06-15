@@ -1,0 +1,33 @@
+.review-box {
+    text-align: left;
+}
+
+.date {
+    margin: 0;
+    font-size: .9rem;
+    color: black;
+    opacity: .5;
+}
+
+h4 {
+    margin-bottom: 5px;
+}
+
+.review-p {
+    margin-top: 5px;
+    color: black;
+}
+
+.modal-button {
+    background-color: rgb(69, 69, 69);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.modal-button:hover {
+    background-color: rgb(135, 135, 135);
+}

@@ -25,16 +25,16 @@ const validateSpot = [
     check('country')
         .exists({ checkFalsy: true })
         .withMessage('Country is required'),
-    check('lat')
-        .exists({ checkFalsy: true })
-        .withMessage('Latitude is required')
-        .isNumeric({ min: -90, max: 90 })
-        .withMessage('Latitude must be within -90 and 90'),
-    check('lng')
-        .exists({ checkFalsy: true })
-        .withMessage('Longtitude is required')
-        .isNumeric({ min: -180, max: 180 })
-        .withMessage('Longitude must be within -180 and 180'),
+    // check('lat')
+    //     // .exists({ checkFalsy: true })
+    //     .withMessage('Latitude is required')
+    //     .isNumeric({ min: -90, max: 90 })
+    //     .withMessage('Latitude must be within -90 and 90'),
+    // check('lng')
+    //     // .exists({ checkFalsy: true })
+    //     .withMessage('Longtitude is required')
+    //     .isNumeric({ min: -180, max: 180 })
+    //     .withMessage('Longitude must be within -180 and 180'),
     check('name')
         .isLength({ max: 50 })
         .withMessage('Name must be less than 50 characters')
@@ -110,7 +110,7 @@ router.get('/:spotId/reviews', async (req, res) => {
 
     const spotReviews = await Review.findAll({
         where: {
-            spotId: parseInt(req.params.spotId)
+            spotId: parseInt(req.params.spotId),
         },
         include: [
             {
@@ -181,36 +181,34 @@ router.get('/:spotId/bookings', restoreUser, requireAuth, async (req, res) => {
 
 // Get all spots owned by current user
 router.get('/current', restoreUser, requireAuth, async (req, res) => {
+    const user = req.user.id;
 
-    const user = req.user.id
-
-    const getUsersSpots = await Spot.findAll(
-        {
-            where: {
-                ownerId: user
-            },
+    const spots = await Spot.findAll({
+        where: {
+            ownerId: user
+        },
+        attributes: {
             include: [
-                {
-                    model: SpotImage,
-                    where: { preview: true },
-                    attributes: ['url']
-                },
-                {
-                    model: Review,
-                    attributes: []
-                }
-            ],
-            attributes: {
-                include: [
-                    'id', 'ownerId', 'address', 'city', 'state', 'country', 'lat', 'lng', 'name', 'price', 'createdAt', 'updatedAt',
-                    [Sequelize.fn('AVG', Sequelize.col('Reviews.stars')), 'avgRating']
-                ]
+                [Sequelize.fn('AVG', Sequelize.col('Reviews.stars')), 'avgRating']
+            ]
+        },
+        include: [
+            {
+                model: SpotImage,
+                as: 'SpotImages',
+                attributes: ['url'],
+                where: { preview: true },
+                required: false
             },
-            group: ['Spot.id', 'SpotImages.id']
-        })
+            {
+                model: Review,
+                attributes: []
+            }
+        ],
+        group: ['Spot.id']
+    });
 
-
-    const format = getUsersSpots.map(spot => ({
+    const format = spots.map(spot => ({
         id: spot.id,
         ownerId: spot.ownerId,
         address: spot.address,
@@ -225,11 +223,11 @@ router.get('/current', restoreUser, requireAuth, async (req, res) => {
         createdAt: spot.createdAt,
         updatedAt: spot.updatedAt,
         avgStarRating: spot.dataValues.avgRating ? parseFloat(spot.dataValues.avgRating).toFixed(1) : null,
-        previewImage: spot.SpotImages[0] ? spot.SpotImages[0].url : null
-    }))
+        previewImage: spot.SpotImages.length > 0 ? spot.SpotImages[0].url : null
+    }));
 
-    res.json({ Spots: format })
-})
+    res.json({ Spots: format });
+});
 
 // Get spot by id
 router.get('/:spotId', async (req, res) => {
@@ -253,7 +251,7 @@ router.get('/:spotId', async (req, res) => {
 
     const reviewCount = await Review.count({ where: { spotId: req.params.spotId } })
     const starsSum = await Review.sum('stars', { where: { spotId: req.params.spotId } })
-    const avgStars = starsSum / reviewCount;
+    const avgStars = reviewCount > 0 ? (starsSum / reviewCount).toFixed(1) : null;
 
     const formattedRes = {
         id: spot.id,
@@ -360,10 +358,11 @@ router.post('/:spotId/reviews', restoreUser, requireAuth, validateReview, async 
 
     const checkReview = await Review.findOne({
         where: {
-            userId: user
+            userId: user,
+            spotId: req.params.spotId
         }
     })
-
+    console.log(checkReview)
     if (checkReview) return res.status(500).json({ message: 'User already has a review for this spot' })
 
     const newReview = await Review.create({
