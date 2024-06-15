@@ -98,6 +98,7 @@ function UpdateSpotForm() {
 
                 for (const image of images) {
                     await dispatch(addImageToSpot(spotId, image.url, image.preview));
+                    console.log('Done!')
                 }
 
                 navigate(`/spots/${spotId}`);

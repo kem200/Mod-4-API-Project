@@ -84,6 +84,18 @@ module.exports = {
         description: 'Stay at The Okay Place in Burbank for a comfortable and affordable experience',
         price: 50
       },
+      {
+        ownerId: 4,
+        address: '620 Grove Lane',
+        city: 'Burbank',
+        state: 'California',
+        country: 'United States',
+        lat: 36.1716,
+        lng: 115.1391,
+        name: 'The Awesome Place',
+        description: 'A great place to stay with your family',
+        price: 300
+      },
 
     ], { validate: true }, options);
   },

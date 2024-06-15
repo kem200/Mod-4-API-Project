@@ -48,6 +48,10 @@
   background-color: #fc2128;
 }
 
+.signup-form-modal button:disabled {
+  background-color: rgb(123, 123, 123);
+}
+
 .signup-form-modal p {
   color: red;
   margin: 0;
