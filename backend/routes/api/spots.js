@@ -314,7 +314,7 @@ router.get('/', validateQuery, async (req, res) => {
                 'id', 'ownerId', 'address', 'city', 'state', 'country', 'lat', 'lng', 'name', 'price', 'createdAt', 'updatedAt',
                 [Sequelize.literal(`(
                         SELECT AVG(stars)
-                        FROM "Reviews"
+                        FROM airbnb_backend."Reviews"
                         WHERE "Reviews"."spotId" = "Spot"."id"
                     )`), 'avgRating']
             ]
