@@ -6,6 +6,7 @@ const GET_SPOT_DETAILS = 'spots/getSpotDetails';
 const CREATE_SPOT = 'spots/createSpot'
 const UPDATE_SPOT = '/spots/updateSpot'
 const ADD_IMAGE = 'spots/addImage';
+const DELETE_SPOT = 'spots/delete'
 
 const getSpot = (spots) => {
     return {
@@ -39,6 +40,13 @@ const updateSpot = (updatedSpot) => {
     return {
         type: UPDATE_SPOT,
         payload: updatedSpot
+    }
+}
+
+const deletedSpot = (spotId) => {
+    return {
+        type: DELETE_SPOT,
+        payload: spotId
     }
 }
 
@@ -106,6 +114,19 @@ export const updatedSpot = (spotId, payload) => async (dispatch) => {
     }
 }
 
+export const deleteSpot = (spotId) => async (dispatch) => {
+    const response = await csrfFetch(`/api/spots/${spotId}`, {
+        method: "DELETE",
+    });
+
+    if (response.ok) {
+        dispatch(deletedSpot(spotId))
+    } else {
+        console.error("Failed to delete spot");
+    }
+
+}
+
 export const addImageToSpot = (spotId, url, preview) => async (dispatch) => {
     const response = await csrfFetch(`/api/spots/${spotId}/images`, {
         method: 'POST',
@@ -158,6 +179,16 @@ const spotReducer = (state = initialState, action) => {
             if (newState.userSpots[action.payload.id]) {
                 newState.userSpots[action.payload.id] = action.payload;
             }
+            return newState;
+        }
+        case DELETE_SPOT: {
+            const newState = {
+                ...state,
+                userSpots: { ...state.userSpots },
+                spots: { ...state.spots }
+            };
+            delete newState.userSpots[action.payload];
+            delete newState.spots[action.payload];
             return newState;
         }
         case ADD_IMAGE: {

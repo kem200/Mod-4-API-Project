@@ -79,7 +79,6 @@ nav button:hover {
   padding: 10px 20px;
   border-radius: 20px;
   background-color: white;
-  border: 1px solid rgb(46, 46, 46);
   transition: box-shadow 0.3s ease-in-out;
 }
 

@@ -77,7 +77,7 @@ function CreateSpotForm() {
     return (
         <main className={styles.main}>
             <h2 className={styles.title}>Update your Spot</h2>
-            <h4 className={styles.subtitle}>Where's your place located?</h4>
+            <h4 className={styles.subtitle}>Wheres your place located?</h4>
             <p>Guests will only get your exact address once they booked a reservation</p>
             <form onSubmit={handleSubmit} className={styles.form}>
                 <label className={styles.label}>

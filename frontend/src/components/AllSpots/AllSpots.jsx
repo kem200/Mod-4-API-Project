@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getSpots } from "../../store/spots";
 import { selectSpots } from "../../store/selectors";

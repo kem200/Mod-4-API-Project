@@ -15,7 +15,7 @@ function ManageSpots() {
 
     useEffect(() => {
         dispatch(getUserSpots())
-    }, [dispatch])
+    }, [dispatch, spots.length])
 
     const handleSpotClick = (spotId) => {
         navigate(`/spots/${spotId}`)
@@ -25,16 +25,14 @@ function ManageSpots() {
         navigate(`/spots/${spotId}/update`)
     }
 
-    // const checkIfUserHasSpots = spots.length === 0 ? true : false
+
 
     return (
-        <main>
+        <div className="manage-page">
             <h1>Manage Your Spots</h1>
             <div className="spots-grid">
-
                 {spots.map(spot => (
                     <div className="manage-spot-tile" key={spot.id}>
-
                         <div key={spot.id} className="spot-card" onClick={() => handleSpotClick(spot.id)}>
                             <img src={spot.previewImage} alt={spot.name} />
                             <div className="spot-info">
@@ -49,13 +47,13 @@ function ManageSpots() {
 
                         <div className="button-wrapper">
                             <button onClick={() => handleUpdate(spot.id)}>Update</button>
-                            <OpenModalButton buttonText={'Delete'} modalComponent={<ConfirmSpotDeleteModal />}/>
+                            <OpenModalButton buttonText={'Delete'} modalComponent={<ConfirmSpotDeleteModal spotId={spot.id} />} />
                         </div>
 
                     </div>
                 ))}
             </div>
-        </main>
+        </div>
     )
 }
 
