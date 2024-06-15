@@ -21,7 +21,7 @@ module.exports = {
         lat: 36.1716,
         lng: 115.1391,
         name: 'The Place',
-        description: 'Welcome to The Place, a beautiful retreat in the heart of Apple Valley. Enjoy stunning views, modern amenities, and a cozy atmosphere. This spot features a fully equipped kitchen, spacious living area, high-speed WiFi, and a private patio perfect for relaxing. Ideal for families or couples looking for a peaceful getaway.',
+        description: 'Welcome to The Place, a beautiful retreat in the heart',
         price: 250
       },
       {
@@ -33,7 +33,7 @@ module.exports = {
         lat: 36.1716,
         lng: 115.1391,
         name: 'The Oasis',
-        description: 'The Oasis is your perfect escape in Rocky Mount. This charming spot offers a serene environment with a lush garden, comfortable beds, and a refreshing swimming pool. Guests can enjoy a fully stocked kitchen, barbecue grill, and a cozy fireplace. It\'s the perfect spot for relaxation and unwinding from the daily hustle.',
+        description: 'The Oasis is your perfect escape in Rocky Mount',
         price: 200
       },
       {
@@ -45,7 +45,7 @@ module.exports = {
         lat: 36.1716,
         lng: 115.1391,
         name: 'The Cool Place',
-        description: 'Experience luxury at The Cool Place in Phoenix. This high-end spot boasts modern architecture, a rooftop terrace with panoramic views, a private pool, and a home theater. Perfect for those looking to indulge in comfort and style, with easy access to local attractions and nightlife.',
+        description: 'Experience luxury at The Cool Place in Phoenix',
         price: 600
       },
       {
@@ -57,7 +57,7 @@ module.exports = {
         lat: 36.1716,
         lng: 115.1391,
         name: 'The Great Place',
-        description: 'Discover The Great Place in Los Angeles, a perfect blend of luxury and convenience. This spacious spot features a gourmet kitchen, large living spaces, a game room, and a beautiful garden. Located close to top attractions, it\'s ideal for exploring the city while enjoying a comfortable stay.',
+        description: 'Discover The Great Place in Los Angeles, a perfect blend of luxury and convenience.',
         price: 450
       },
       {
@@ -69,7 +69,7 @@ module.exports = {
         lat: 36.1716,
         lng: 115.1391,
         name: 'The Cheap Place',
-        description: 'The Cheap Place offers unbeatable value in Las Vegas. Enjoy a clean and cozy stay with essential amenities like a comfortable bed, free WiFi, and a convenient kitchenette. Perfect for budget travelers looking to explore the city without breaking the bank.',
+        description: 'The Cheap Place offers unbeatable value in Las Vegas.',
         price: 34
       },
       {
@@ -81,7 +81,7 @@ module.exports = {
         lat: 36.1716,
         lng: 115.1391,
         name: 'The Okay Place',
-        description: 'Stay at The Okay Place in Burbank for a comfortable and affordable experience. This spot features basic amenities including a cozy bed, a small kitchenette, and free parking. It\'s a great option for those seeking convenience and practicality during their visit.',
+        description: 'Stay at The Okay Place in Burbank for a comfortable and affordable experience',
         price: 50
       },
 
