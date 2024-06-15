@@ -196,7 +196,7 @@ router.get('/current', restoreUser, requireAuth, async (req, res) => {
             {
                 model: SpotImage,
                 as: 'SpotImages',
-                attributes: ['url'],
+                attributes: ['id', 'url'], // Include id attribute
                 where: { preview: true },
                 required: false
             },
@@ -205,7 +205,10 @@ router.get('/current', restoreUser, requireAuth, async (req, res) => {
                 attributes: []
             }
         ],
-        group: ['Spot.id']
+        group: [
+            'Spot.id',
+            'SpotImages.id' // Include SpotImages.id in the GROUP BY clause
+        ]
     });
 
     const format = spots.map(spot => ({
