@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from 'react';
+  import { useEffect, useState, useRef } from 'react';
 import * as sessionActions from '../../store/session';
 import { useDispatch } from 'react-redux';
 import { useModal } from '../../context/modal';
@@ -37,6 +37,11 @@ function LoginFormModal() {
       });
   };
 
+  const handleDemoLogin = (credential, password) => {
+    dispatch(sessionActions.login({credential, password}))
+    closeModal()
+  }
+
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (modalRef.current && !modalRef.current.contains(event.target)) {
@@ -70,8 +75,9 @@ function LoginFormModal() {
             onChange={(e) => setPassword(e.target.value)}
             required
           />
-          <button disabled={Object.values(errors).length} type="submit">Log In</button>
+          <button id='login-button' disabled={Object.values(errors).length} type="submit">Log In</button>
         </form>
+          <button className='demo-login' onClick={() => handleDemoLogin('demo', 'password')}>Demo User</button>
       </main>
     </div>
   );

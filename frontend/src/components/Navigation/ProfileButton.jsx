@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { FaUserCircle } from 'react-icons/fa';
+import { RxHamburgerMenu } from "react-icons/rx";
 import * as sessionActions from '../../store/session';
 import OpenModalButton from '../OpenModalButton';
 import LoginFormModal from '../LoginFormModal';
@@ -51,8 +52,8 @@ function ProfileButton({ user }) {
 
   return (
     <>
-      <button onClick={toggleMenu}>
-        <FaUserCircle />
+      <button id='menu-button' onClick={toggleMenu}>
+      <RxHamburgerMenu size={25}/> <FaUserCircle size={25} />
       </button>
       <ul className={ulClassName} ref={ulRef}>
         {user ? (

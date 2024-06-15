@@ -10,7 +10,7 @@ function Navigation({ isLoaded }) {
     <nav>
       <ul className="nav-left">
         <li>
-          <NavLink to="/">Home</NavLink>
+          <NavLink to="/"><img src="/logo.png" alt="LodgingLux" /></NavLink>
         </li>
       </ul>
       <ul className="nav-right">

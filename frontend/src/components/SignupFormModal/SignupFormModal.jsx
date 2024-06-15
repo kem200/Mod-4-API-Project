@@ -29,30 +29,64 @@ function SignupFormModal() {
     };
   }, [closeModal]);
 
+  useEffect(() => {
+    const errors = {};
+
+    if (!email) {
+      errors.email = 'Email is required';
+    }
+    if (username.length < 4) {
+      errors.username = 'Username must be more than 4 characters';
+    }
+    if (!firstName) {
+      errors.firstName = 'First name is required';
+    }
+    if (!lastName) {
+      errors.lastName = 'Last name is required';
+    }
+    if (password.length < 6) {
+      errors.password = 'Password must be more than 6 characters';
+    }
+    if (password !== confirmPassword) {
+      errors.confirmPassword = 'Passwords do not match';
+    }
+
+    setErrors(errors);
+  }, [email, username, firstName, lastName, password, confirmPassword]);
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (password === confirmPassword) {
-      setErrors({});
-      return dispatch(
-        sessionActions.signup({
-          email,
-          username,
-          firstName,
-          lastName,
-          password
-        })
-      )
-        .then(closeModal)
-        .catch(async (res) => {
-          const data = await res.json();
-          if (data?.errors) {
-            setErrors(data.errors);
-          }
-        });
-    }
-    return setErrors({
-      confirmPassword: "Confirm Password field must be the same as the Password field"
-    });
+    setErrors({});
+    return dispatch(
+      sessionActions.signup({
+        email,
+        username,
+        firstName,
+        lastName,
+        password
+      })
+    )
+      .then(closeModal)
+      .catch(async (res) => {
+        const data = await res.json();
+        if (data?.errors) {
+          setErrors(data.errors);
+        }
+      });
+  };
+
+  const isDisabled = () => {
+    return (
+      !email ||
+      !username ||
+      !firstName ||
+      !lastName ||
+      !password ||
+      !confirmPassword ||
+      username.length < 4 ||
+      password.length < 6 ||
+      password !== confirmPassword
+    );
   };
 
   return (
@@ -110,7 +144,7 @@ function SignupFormModal() {
           {errors.confirmPassword && (
             <p>{errors.confirmPassword}</p>
           )}
-          <button type="submit">Sign Up</button>
+          <button type="submit" disabled={isDisabled()}>Sign Up</button>
         </form>
       </main>
     </div>
