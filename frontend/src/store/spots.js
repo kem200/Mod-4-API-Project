@@ -5,6 +5,7 @@ const GET_USER_SPOTS = '/spots/currentUser'
 const GET_SPOT_DETAILS = 'spots/getSpotDetails';
 const CREATE_SPOT = 'spots/createSpot'
 const UPDATE_SPOT = '/spots/updateSpot'
+const CLEAR_USER_SPOTS = 'spots/clearUserSpots';
 const ADD_IMAGE = 'spots/addImage';
 const DELETE_SPOT = 'spots/delete'
 
@@ -49,6 +50,12 @@ const deletedSpot = (spotId) => {
         payload: spotId
     }
 }
+
+const clearUserSpots = () => {
+    return {
+        type: CLEAR_USER_SPOTS,
+    };
+};
 
 const addImage = (image) => ({
     type: ADD_IMAGE,
@@ -191,6 +198,9 @@ const spotReducer = (state = initialState, action) => {
             delete newState.spots[action.payload];
             return newState;
         }
+        case CLEAR_USER_SPOTS: {
+            return { ...state, userSpots: {} };
+        }
         case ADD_IMAGE: {
             const newState = { ...state };
             const spotId = action.image.spotId;
@@ -208,3 +218,4 @@ const spotReducer = (state = initialState, action) => {
 
 
 export default spotReducer;
+export { clearUserSpots }
