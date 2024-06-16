@@ -34,7 +34,10 @@ function AllSpots() {
                                 <p>{spot.city}, {spot.state}</p>
                                 <p className="spot-rating">★ {spot.avgStarRating || "New"}</p>
                             </div>
-                            <p className="spot-price">${spot.price} / night</p>
+                            <div className="price-wrapper">
+                            <p className="spot-price">${spot.price} </p>
+                            <p className="night">night</p>
+                            </div>
                         </div>
                     </div>
                 ))}

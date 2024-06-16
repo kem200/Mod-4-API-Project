@@ -3,6 +3,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getSpotDetails } from '../../store/spots';
 import { useParams } from 'react-router-dom';
 import Reviews from '../Reviews/Reviews';
+import { faStar as solidStar } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import './SpotDetails.css';
 
 function SpotDetails() {
@@ -54,7 +56,7 @@ function SpotDetails() {
                     <div className="price-and-rating">
                         <p className="spot-price">${spot.price} / night</p>
                         <p className="spot-rating">
-                            ★ {avgStarRating || 'New'}
+                        <FontAwesomeIcon icon={solidStar}/> {avgStarRating || 'New'}
                             {numReviews > 0 && ` · ${numReviews} ${reviewTextForSingularOrPlural}`}
                         </p>
                     </div>
@@ -62,10 +64,10 @@ function SpotDetails() {
                 </div>
             </div>
             <div className="spot-reviews">
-                <h2>
-                    ★ {avgStarRating || 'New'}
+                <p id='bottom-rating'>
+                    <FontAwesomeIcon icon={solidStar}/> {avgStarRating || 'New'}
                     {numReviews > 0 && ` · ${numReviews} ${reviewTextForSingularOrPlural}`}
-                </h2>
+                </p>
                 <Reviews spotId={spotId} ownerId={spot.ownerId}/>
             </div>
         </div>

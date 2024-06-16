@@ -8,15 +8,17 @@
 .spot-header {
     text-align: left;
     margin-bottom: 20px;
+    color: rgb(34, 34, 34);
 }
 
 .spot-header h1 {
     font-size: 2rem;
     text-align: left;
+    color: rgb(34, 34, 34);
 }
 
 .spot-header p {
-    color: #555;
+    color: rgb(34, 34, 34);
 }
 
 .spot-images {
@@ -57,10 +59,13 @@
 .spot-hosted h3 {
     font-size: 1.5rem;
     margin-bottom: 10px;
+    color: rgb(34, 34, 34);
 }
 
 .spot-description {
-    color: black;
+    color: rgb(34, 34, 34);
+    font-weight: 100;
+    font-size: 16px;
     padding-right: 20px;
     max-width: 650px;
 }
@@ -82,12 +87,13 @@
     justify-content: space-between;
     width: 100%;
     align-items: center;
+    color: rgb(34, 34, 34);
 }
 
 .spot-price {
-    color: black;
-    font-size: 1.0rem;
-    font-weight: 600;
+    font-size: 18px;
+    font-weight: 590;
+    color: rgb(34, 34, 34);
 }
 
 .spot-reserve {
@@ -111,15 +117,23 @@
 }
 
  .spot-rating {
-    color: #000000;
-    font-weight: 550;
-    font-size: 1rem;
+    color: rgb(34, 34, 34);
+    font-weight: 500;
+    font-size: 16px;
 }
 
+#bottom-rating {
+    font-size: 17.5px;
+}
+
+.spot-reviews p {
+    font-size: 14.5px;
+}
 
 .spot-reviews h3 {
     font-size: 1.5rem;
     margin-bottom: 10px;
+    color: rgb(34, 34, 34);
 }
 
 .review {
@@ -128,9 +142,14 @@
 
 .review p {
     margin: 5px 0;
+    color: rgb(34, 34, 34);
 }
 
 .wrapper {
     display: flex;
     justify-content: space-between;
+}
+
+h3 {
+    color: rgb(34, 34, 34);
 }

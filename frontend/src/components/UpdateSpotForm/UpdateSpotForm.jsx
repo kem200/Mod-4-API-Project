@@ -10,6 +10,7 @@ import styles from '../CreateSpotForm/CreateSpot.module.css'
 function UpdateSpotForm() {
     const { spotId } = useParams();
     const spot = useSelector(state => state.spot.spots[spotId]);
+    console.log(spot)
     const dispatch = useDispatch();
     const navigate = useNavigate();
 

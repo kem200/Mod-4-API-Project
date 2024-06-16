@@ -5,7 +5,7 @@
 
 .spots-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
     gap: 15px;
     width: 100%;
     margin: 0 auto;
@@ -54,12 +54,13 @@
 }
 
 .spot-info .spot-price {
-    font-weight: bold;
-    color: #333;
+    font-weight: 500;
+    font-size: 16px;
+    color: rgb(34, 34, 34)
 }
 
 .spot-info .spot-rating {
-    color: black;
+    color: rgb(34, 34, 34);
     margin-left: 10px;
 }
 
@@ -85,4 +86,12 @@
     visibility: visible;
     opacity: .85;
     transform: translateY(0);
+}
+
+.price-wrapper {
+    display: flex;
+}
+
+.night {
+   padding-left: 5px;
 }
