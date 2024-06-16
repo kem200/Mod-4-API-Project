@@ -50,42 +50,38 @@ function ProfileButton({ user }) {
   const ulClassName = `profile-dropdown ${showMenu ? '' : 'hidden'}`;
 
   return (
-    <>
+    <div className="profile-container">
       <button id='menu-button' onClick={toggleMenu}>
         <RxHamburgerMenu size={25} /> <FaUserCircle size={25} />
       </button>
-      <ul className={ulClassName} ref={ulRef}>
+      <ul id='menu-list' className={ulClassName} ref={ulRef}>
         {user ? (
-          <>
+          <div className='menu-list'>
             <li>Hello, {user.firstName} {user.lastName}</li>
             <li>{user.email}</li>
-            <li>
-              <button className='manage-spots' onClick={handleManage}>Manage Spots</button>
-            </li>
-            <li>
-              <button className='logout' onClick={logout}>Log Out</button>
-            </li>
-          </>
+            <button className='manage-spots' onClick={handleManage}>Manage Spots</button>
+            <button className='logout' onClick={logout}>Log Out</button>
+          </div>
         ) : (
           <>
-            <li>
               <OpenModalButton
                 buttonText="Log In"
                 onButtonClick={closeMenu}
                 modalComponent={<LoginFormModal />}
+                className='login-button'
               />
-            </li>
-            <li>
+
+
               <OpenModalButton
                 buttonText="Sign Up"
                 onButtonClick={closeMenu}
                 modalComponent={<SignupFormModal />}
+                className='signup-button'
               />
-            </li>
           </>
         )}
       </ul>
-    </>
+    </div>
   );
 }
 
