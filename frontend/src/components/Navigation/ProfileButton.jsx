@@ -2,36 +2,35 @@ import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { FaUserCircle } from 'react-icons/fa';
-import { RxHamburgerMenu } from "react-icons/rx";
+import { RxHamburgerMenu } from 'react-icons/rx';
 import * as sessionActions from '../../store/session';
 import OpenModalButton from '../OpenModalButton';
 import LoginFormModal from '../LoginFormModal';
 import SignupFormModal from '../SignupFormModal';
-import './ProfileButton.css'
+import './ProfileButton.css';
 
 function ProfileButton({ user }) {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const [showMenu, setShowMenu] = useState(false);
   const ulRef = useRef();
 
   const toggleMenu = (e) => {
-    e.stopPropagation(); // Keep from bubbling up to document and triggering closeMenu
-    setShowMenu(!showMenu);
+    e.stopPropagation(); // Prevent click from bubbling up to document
+    setShowMenu(prevShowMenu => !prevShowMenu);
   };
 
   useEffect(() => {
     if (!showMenu) return;
 
     const closeMenu = (e) => {
-      if (!ulRef.current.contains(e.target)) {
+      if (ulRef.current && !ulRef.current.contains(e.target)) {
         setShowMenu(false);
       }
     };
 
     document.addEventListener('click', closeMenu);
-
-    return () => document.removeEventListener("click", closeMenu);
+    return () => document.removeEventListener('click', closeMenu);
   }, [showMenu]);
 
   const closeMenu = () => setShowMenu(false);
@@ -40,20 +39,20 @@ function ProfileButton({ user }) {
     e.preventDefault();
     dispatch(sessionActions.logout());
     closeMenu();
-    navigate('/')
+    navigate('/');
   };
 
   const handleManage = (e) => {
-    e.preventDefault()
-    navigate('/spots/manage')
-  }
+    e.preventDefault();
+    navigate('/spots/manage');
+  };
 
-  const ulClassName = "profile-dropdown" + (showMenu ? "" : " hidden");
+  const ulClassName = `profile-dropdown ${showMenu ? '' : 'hidden'}`;
 
   return (
     <>
       <button id='menu-button' onClick={toggleMenu}>
-      <RxHamburgerMenu size={25}/> <FaUserCircle size={25} />
+        <RxHamburgerMenu size={25} /> <FaUserCircle size={25} />
       </button>
       <ul className={ulClassName} ref={ulRef}>
         {user ? (

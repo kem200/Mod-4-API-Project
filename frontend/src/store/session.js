@@ -1,4 +1,5 @@
 import { csrfFetch } from './csrf';
+import { clearUserSpots } from './spots';
 
 const SET_USER = "session/setUser";
 const REMOVE_USER = "session/removeUser";
@@ -59,6 +60,7 @@ export const signup = (user) => async (dispatch) => {
       method: 'DELETE'
     });
     dispatch(removeUser());
+    dispatch(clearUserSpots())
     return response;
   };
 

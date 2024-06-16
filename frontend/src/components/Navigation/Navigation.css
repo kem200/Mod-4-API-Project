@@ -76,6 +76,7 @@ nav button:hover {
 
 .profile-dropdown {
   right: 0;
+  z-index: 1000;
   background-color: white;
   position: absolute;
   border: 1px solid #ccc;
@@ -96,6 +97,8 @@ nav button:hover {
 }
 
 .new-spot-button {
+  display: flex;
+  width: auto;
   margin-right: 15px;
   font-weight: bold;
   text-decoration: none;
