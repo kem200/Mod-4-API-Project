@@ -88,18 +88,31 @@ nav button {
 
 @media (max-width: 750px) {
 
+  nav {
+    padding: 0px;
+  }
+
   nav li {
     margin: 10px 0;
     text-align: left;
   }
 
+  nav img {
+    width: 60%;
+  }
+
   .new-spot-button {
     width: 100%;
+    font-size: 14px;
     text-align: center;
+  }
+  .nav-right {
+    display: flex;
   }
 
   .profile-container {
     display: flex;
+    width: 140px;
     flex-direction: row;
     justify-content: flex-end;
   }
