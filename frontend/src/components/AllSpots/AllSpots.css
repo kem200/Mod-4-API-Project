@@ -90,9 +90,9 @@
 
 .price-wrapper {
     display: flex;
+    align-items: center;
 }
 
 .night {
    padding-left: 5px;
 }
-
