@@ -82,6 +82,7 @@
     margin-bottom: 20px;
 }
 
+
 .spot-reserve .price-and-rating {
     display: flex;
     justify-content: space-between;
@@ -90,15 +91,25 @@
     color: rgb(34, 34, 34);
 }
 
+.price-and-rating {
+    max-height: 50px;
+}
+
 .spot-price {
+    display: flex;
+    align-items: center;
+    font-weight: 600;
     font-size: 18px;
-    font-weight: 590;
     color: rgb(34, 34, 34);
+}
+
+#night {
+    margin-left: 5px;
+    font-weight: lighter;
 }
 
 .spot-reserve {
     font-size: 1.2rem;
-    font-weight: bold;
 }
 
 .spot-reserve button {
@@ -116,7 +127,7 @@
     background-color: #ff3a3f;
 }
 
- .spot-rating {
+.spot-rating {
     color: rgb(34, 34, 34);
     font-weight: 500;
     font-size: 16px;
@@ -152,4 +163,107 @@
 
 h3 {
     color: rgb(34, 34, 34);
+}
+
+
+.carousel-container {
+    display: none;
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+    margin-bottom: 20px;
+}
+
+.swiper-slide img {
+    width: 100%;
+    object-fit: cover;
+}
+
+.swiper-pagination {
+    bottom: 10px !important;
+}
+
+@media (max-width: 750px) {
+
+    .spot-images {
+        display: none;
+    }
+
+    .carousel-container {
+        display: block;
+    }
+
+    .spot-details {
+        padding-bottom: 70px;
+    }
+
+    .spot-reserve {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        width: 100%;
+        height: auto;
+        border-radius: 0;
+        padding: 10px;
+        background-color: white;
+        box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        z-index: 1000;
+        margin: 0;
+    }
+
+    .price-and-rating {
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        margin-right: 10px;
+        color: rgb(34, 34, 34);
+        font-weight: 590;
+        font-size: 18px;
+    }
+
+    .price-and-rating {
+        width: 50%;
+    }
+
+    .spot-price {
+        display: flex;
+        align-items: center;
+        font-weight: 600;
+        font-size: 20px;
+        margin: 0;
+        padding: 5px;
+    }
+
+    #night {
+        margin-left: 5px;
+        font-weight: 100;
+    }
+
+    .spot-rating {
+        font-size: 16px;
+        margin: 0;
+        padding: 5px;
+    }
+
+    .spot-reserve button {
+        padding: 10px 20px;
+        font-size: 1rem;
+        width: auto;
+        background-color: #ff5a5f;
+        color: #fff;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        white-space: nowrap;
+    }
+
+    .spot-reserve button:hover {
+        background-color: #ff3a3f;
+    }
+
 }

@@ -2,11 +2,12 @@ nav {
   padding: 10px 20px;
   display: flex;
   justify-content: space-between;
+  align-items: center;
 }
 
 nav img  {
-  height: 55px;
-  width: 300px;
+  height: auto;
+  width: 140px;
   object-fit: cover;
 }
 
@@ -77,9 +78,33 @@ nav button {
   border-radius: 20px;
   background-color: white;
   transition: box-shadow 0.3s ease-in-out;
+  white-space: nowrap;
 }
 
 .new-spot-button:hover {
   text-decoration: none;
   box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+@media (max-width: 750px) {
+
+  nav li {
+    margin: 10px 0;
+    text-align: left;
+  }
+
+  .new-spot-button {
+    width: 100%;
+    text-align: center;
+  }
+
+  .profile-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+  }
+
+  ul li {
+    width: 140px;
+  }
 }
